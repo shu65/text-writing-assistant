@@ -31,4 +31,34 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerCommand('text-writing-assistant.editSuggestion', (comment: SuggestionComment) => {
 		editSuggestion(comment);
 	}));
+
+	context.subscriptions.push(vscode.commands.registerCommand('text-writing-assistant.cancelsaveSuggestion', (comment: SuggestionComment) => {
+		if (!comment.parent) {
+			return;
+		}
+
+		comment.parent.comments = comment.parent.comments.map(cmt => {
+			if ((cmt as SuggestionComment).id === comment.id) {
+				cmt.body = (cmt as SuggestionComment).savedBody;
+				cmt.mode = vscode.CommentMode.Preview;
+			}
+
+			return cmt;
+		});
+	}));
+
+	context.subscriptions.push(vscode.commands.registerCommand('text-writing-assistant.saveSuggestion', (comment: SuggestionComment) => {
+		if (!comment.parent) {
+			return;
+		}
+
+		comment.parent.comments = comment.parent.comments.map(cmt => {
+			if ((cmt as SuggestionComment).id === comment.id) {
+				(cmt as SuggestionComment).savedBody = cmt.body;
+				cmt.mode = vscode.CommentMode.Preview;
+			}
+
+			return cmt;
+		});
+	}));
 }

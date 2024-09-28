@@ -33,13 +33,22 @@
           "dark": "resources/close_inverse.svg",
           "light": "resources/close.svg"
         }
-      },			{
+      },
+      {
 				"command": "text-writing-assistant.editSuggestion",
 				"title": "Edit Suggestion",
 				"icon": {
 					"dark": "resources/edit_inverse.svg",
 					"light": "resources/edit.svg"
 				}
+			},
+      {
+				"command": "text-writing-assistant.saveSuggestion",
+				"title": "Save"
+			},
+			{
+				"command": "text-writing-assistant.cancelsaveSuggestion",
+				"title": "Cancel"
 			}
     ],
     "menus": {
@@ -50,6 +59,17 @@
         },
         {
           "command": "text-writing-assistant.deleteSuggestion",
+          "when": "false"
+        },      {
+          "command": "text-writing-assistant.editSuggestion",
+          "when": "false"
+        },
+        {
+          "command": "text-writing-assistant.saveSuggestion",
+          "when": "false"
+        },
+        {
+          "command": "text-writing-assistant.cancelsaveSuggestion",
           "when": "false"
         }
       ],
@@ -75,6 +95,16 @@
 				}
       ],
       "comments/comment/context": [
+        {
+					"command": "text-writing-assistant.cancelsaveSuggestion",
+					"group": "inline@1",
+					"when": "commentController == chatgptSuggestion"
+				},
+				{
+					"command": "text-writing-assistant.saveSuggestion",
+					"group": "inline@2",
+					"when": "commentController == chatgptSuggestion"
+				}
       ]
     }
   },

@@ -4,6 +4,7 @@ let commentId = 1;
 
 export class SuggestionComment implements vscode.Comment {
 	id: number;
+	savedBody: string | vscode.MarkdownString;
 	constructor(
 		public body: string | vscode.MarkdownString,
 		public mode: vscode.CommentMode,
@@ -12,5 +13,6 @@ export class SuggestionComment implements vscode.Comment {
 		public contextValue?: string
 	) {
 		this.id = ++commentId;
+		this.savedBody = body;
 	}
 }
