@@ -23,81 +23,33 @@
         "title": "Show ChatGPT Suggestion"
       },
       {
-        "command": "text-writing-assistant.createNote",
-        "title": "Create Note",
-        "enablement": "!commentIsEmpty"
-      },
-      {
-        "command": "text-writing-assistant.replyNote",
-        "title": "Reply",
-        "enablement": "!commentIsEmpty"
-      },
-      {
-        "command": "text-writing-assistant.editNote",
-        "title": "Edit",
-        "icon": {
-          "dark": "resources/edit_inverse.svg",
-          "light": "resources/edit.svg"
-        }
-      },
-      {
         "command": "text-writing-assistant.applySuggestion",
         "title": "Apply Suggestion"
       },
       {
-        "command": "text-writing-assistant.deleteNote",
-        "title": "Delete Note",
+        "command": "text-writing-assistant.deleteSuggestion",
+        "title": "Delete Suggestion",
         "icon": {
           "dark": "resources/close_inverse.svg",
           "light": "resources/close.svg"
         }
-      },
-      {
-        "command": "text-writing-assistant.deleteNoteComment",
-        "title": "Delete Comment",
-        "icon": {
-          "dark": "resources/close_inverse.svg",
-          "light": "resources/close.svg"
-        }
-      },
-      {
-        "command": "text-writing-assistant.saveNote",
-        "title": "Save"
-      },
-      {
-        "command": "text-writing-assistant.cancelsaveNote",
-        "title": "Cancel"
-      },
-      {
-        "command": "text-writing-assistant.startDraft",
-        "title": "Start Draft",
-        "enablement": "!commentIsEmpty"
-      },
-      {
-        "command": "text-writing-assistant.finishDraft",
-        "title": "Finish Draft"
-      },
-      {
-        "command": "text-writing-assistant.dispose",
-        "title": "Remove All Notes"
-      }
+      },			{
+				"command": "text-writing-assistant.editSuggestion",
+				"title": "Edit Suggestion",
+				"icon": {
+					"dark": "resources/edit_inverse.svg",
+					"light": "resources/edit.svg"
+				}
+			}
     ],
     "menus": {
       "commandPalette": [
         {
-          "command": "text-writing-assistant.createNote",
+          "command": "text-writing-assistant.applySuggestion",
           "when": "false"
         },
         {
-          "command": "text-writing-assistant.replyNote",
-          "when": "false"
-        },
-        {
-          "command": "text-writing-assistant.deleteNote",
-          "when": "false"
-        },
-        {
-          "command": "text-writing-assistant.deleteNoteComment",
+          "command": "text-writing-assistant.deleteSuggestion",
           "when": "false"
         }
       ],
@@ -108,56 +60,21 @@
           "when": "commentController == chatgptSuggestion"
         },
         {
-          "command": "text-writing-assistant.deleteNote",
+          "command": "text-writing-assistant.deleteSuggestion",
           "group": "navigation",
           "when": "commentController == chatgptSuggestion && !commentThreadIsEmpty"
         }
       ],
       "comments/commentThread/context": [
-        {
-          "command": "text-writing-assistant.createNote",
-          "group": "inline",
-          "when": "commentController == chatgptSuggestion && commentThreadIsEmpty"
-        },
-        {
-          "command": "text-writing-assistant.replyNote",
-          "group": "inline",
-          "when": "commentController == chatgptSuggestion && !commentThreadIsEmpty"
-        },
-        {
-          "command": "text-writing-assistant.startDraft",
-          "group": "inline",
-          "when": "commentController == chatgptSuggestion && commentThreadIsEmpty"
-        },
-        {
-          "command": "text-writing-assistant.finishDraft",
-          "group": "inline",
-          "when": "commentController == chatgptSuggestion && commentThread == draft"
-        }
       ],
       "comments/comment/title": [
         {
-          "command": "text-writing-assistant.editNote",
-          "group": "group@1",
-          "when": "commentController == chatgptSuggestion"
-        },
-        {
-          "command": "text-writing-assistant.deleteNoteComment",
-          "group": "group@2",
-          "when": "commentController == chatgptSuggestion && comment == canDelete"
-        }
+					"command": "text-writing-assistant.editSuggestion",
+					"group": "group@1",
+					"when": "commentController == chatgptSuggestion"
+				}
       ],
       "comments/comment/context": [
-        {
-          "command": "text-writing-assistant.cancelsaveNote",
-          "group": "inline@1",
-          "when": "commentController == chatgptSuggestion"
-        },
-        {
-          "command": "text-writing-assistant.saveNote",
-          "group": "inline@2",
-          "when": "commentController == chatgptSuggestion"
-        }
       ]
     }
   },
