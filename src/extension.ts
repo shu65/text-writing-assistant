@@ -1,6 +1,8 @@
 'use strict';
 
 import * as vscode from 'vscode';
+import { showChatGPTSuggestion } from './commands/showChatGPTSuggestion';
+import { applySuggestion } from './commands/applySuggestion';
 
 let commentId = 1;
 
@@ -22,7 +24,7 @@ class NoteComment implements vscode.Comment {
 
 export function activate(context: vscode.ExtensionContext) {
 	// A `CommentController` is able to provide comments for documents.
-	const commentController = vscode.comments.createCommentController('comment-sample', 'Comment API Sample');
+	const commentController = vscode.comments.createCommentController('chatgptSuggestion', 'ChatGPT Suggestion');
 	context.subscriptions.push(commentController);
 
 	// A `CommentingRangeProvider` controls where gutter decorations that allow adding comments are shown
@@ -33,17 +35,17 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	};
 
-	context.subscriptions.push(vscode.commands.registerCommand('mywiki.createNote', (reply: vscode.CommentReply) => {
+	context.subscriptions.push(vscode.commands.registerCommand('text-writing-assistant.createNote', (reply: vscode.CommentReply) => {
 		const thread = reply.thread;
 		thread.canReply = false;
 		replyNote(reply);
 	}));
 
-	context.subscriptions.push(vscode.commands.registerCommand('mywiki.replyNote', (reply: vscode.CommentReply) => {
+	context.subscriptions.push(vscode.commands.registerCommand('text-writing-assistant.replyNote', (reply: vscode.CommentReply) => {
 		replyNote(reply);
 	}));
 
-	context.subscriptions.push(vscode.commands.registerCommand('mywiki.startDraft', (reply: vscode.CommentReply) => {
+	context.subscriptions.push(vscode.commands.registerCommand('text-writing-assistant.startDraft', (reply: vscode.CommentReply) => {
 		const thread = reply.thread;
 		thread.contextValue = 'draft';
 		const newComment = new NoteComment(reply.text, vscode.CommentMode.Preview, { name: 'vscode' }, thread);
@@ -51,7 +53,7 @@ export function activate(context: vscode.ExtensionContext) {
 		thread.comments = [...thread.comments, newComment];
 	}));
 
-	context.subscriptions.push(vscode.commands.registerCommand('mywiki.finishDraft', (reply: vscode.CommentReply) => {
+	context.subscriptions.push(vscode.commands.registerCommand('text-writing-assistant.finishDraft', (reply: vscode.CommentReply) => {
 		const thread = reply.thread;
 
 		if (!thread) {
@@ -69,7 +71,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	}));
 
-	context.subscriptions.push(vscode.commands.registerCommand('mywiki.deleteNoteComment', (comment: NoteComment) => {
+	context.subscriptions.push(vscode.commands.registerCommand('text-writing-assistant.deleteNoteComment', (comment: NoteComment) => {
 		const thread = comment.parent;
 		if (!thread) {
 			return;
@@ -82,11 +84,11 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	}));
 
-	context.subscriptions.push(vscode.commands.registerCommand('mywiki.deleteNote', (thread: vscode.CommentThread) => {
+	context.subscriptions.push(vscode.commands.registerCommand('text-writing-assistant.deleteNote', (thread: vscode.CommentThread) => {
 		thread.dispose();
 	}));
 
-	context.subscriptions.push(vscode.commands.registerCommand('mywiki.cancelsaveNote', (comment: NoteComment) => {
+	context.subscriptions.push(vscode.commands.registerCommand('text-writing-assistant.cancelsaveNote', (comment: NoteComment) => {
 		if (!comment.parent) {
 			return;
 		}
@@ -101,7 +103,7 @@ export function activate(context: vscode.ExtensionContext) {
 		});
 	}));
 
-	context.subscriptions.push(vscode.commands.registerCommand('mywiki.saveNote', (comment: NoteComment) => {
+	context.subscriptions.push(vscode.commands.registerCommand('text-writing-assistant.saveNote', (comment: NoteComment) => {
 		if (!comment.parent) {
 			return;
 		}
@@ -116,7 +118,7 @@ export function activate(context: vscode.ExtensionContext) {
 		});
 	}));
 
-	context.subscriptions.push(vscode.commands.registerCommand('mywiki.editNote', (comment: NoteComment) => {
+	context.subscriptions.push(vscode.commands.registerCommand('text-writing-assistant.editNote', (comment: NoteComment) => {
 		if (!comment.parent) {
 			return;
 		}
@@ -130,7 +132,7 @@ export function activate(context: vscode.ExtensionContext) {
 		});
 	}));
 
-	context.subscriptions.push(vscode.commands.registerCommand('mywiki.dispose', () => {
+	context.subscriptions.push(vscode.commands.registerCommand('text-writing-assistant.dispose', () => {
 		commentController.dispose();
 	}));
 
@@ -143,4 +145,13 @@ export function activate(context: vscode.ExtensionContext) {
 
 		thread.comments = [...thread.comments, newComment];
 	}
+
+		// Register command
+		context.subscriptions.push(
+			vscode.commands.registerCommand('text-writing-assistant.showChatGPTSuggestion', () => showChatGPTSuggestion(commentController)));
+
+		context.subscriptions.push(
+			vscode.commands.registerCommand('text-writing-assistant.applySuggestion', (thread: vscode.CommentThread) => {
+				applySuggestion(thread);
+		}));
 }

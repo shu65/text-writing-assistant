@@ -1,169 +1,181 @@
 {
-	"name": "vscode-comment-api-example",
-	"displayName": "Comment API Sample",
-	"description": "Comment API Sample",
-	"version": "0.0.1",
-	"publisher": "vscode-samples",
-	"private": true,
-	"license": "MIT",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/Microsoft/vscode-extension-samples"
-	},
-	"engines": {
-		"vscode": "^1.73.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"activationEvents": [
-		"*"
-	],
-	"main": "./out/extension.js",
-	"contributes": {
-		"commands": [
-			{
-				"command": "mywiki.createNote",
-				"title": "Create Note",
-				"enablement": "!commentIsEmpty"
-			},
-			{
-				"command": "mywiki.replyNote",
-				"title": "Reply",
-				"enablement": "!commentIsEmpty"
-			},
-			{
-				"command": "mywiki.editNote",
-				"title": "Edit",
-				"icon": {
-					"dark": "resources/edit_inverse.svg",
-					"light": "resources/edit.svg"
-				}
-			},
-			{
-				"command": "mywiki.deleteNote",
-				"title": "Delete Note",
-				"icon": {
-					"dark": "resources/close_inverse.svg",
-					"light": "resources/close.svg"
-				}
-			},
-			{
-				"command": "mywiki.deleteNoteComment",
-				"title": "Delete Comment",
-				"icon": {
-					"dark": "resources/close_inverse.svg",
-					"light": "resources/close.svg"
-				}
-			},
-			{
-				"command": "mywiki.saveNote",
-				"title": "Save"
-			},
-			{
-				"command": "mywiki.cancelsaveNote",
-				"title": "Cancel"
-			},
-			{
-				"command": "mywiki.startDraft",
-				"title": "Start Draft",
-				"enablement": "!commentIsEmpty"
-			},
-			{
-				"command": "mywiki.finishDraft",
-				"title": "Finish Draft"
-			},
-			{
-				"command": "mywiki.dispose",
-				"title": "Remove All Notes"
-			}
-		],
-		"menus": {
-			"commandPalette": [
-				{
-					"command": "mywiki.createNote",
-					"when": "false"
-				},
-				{
-					"command": "mywiki.replyNote",
-					"when": "false"
-				},
-				{
-					"command": "mywiki.deleteNote",
-					"when": "false"
-				},
-				{
-					"command": "mywiki.deleteNoteComment",
-					"when": "false"
-				}
-			],
-			"comments/commentThread/title": [
-				{
-					"command": "mywiki.deleteNote",
-					"group": "navigation",
-					"when": "commentController == comment-sample && !commentThreadIsEmpty"
-				}
-			],
-			"comments/commentThread/context": [
-				{
-					"command": "mywiki.createNote",
-					"group": "inline",
-					"when": "commentController == comment-sample && commentThreadIsEmpty"
-				},
-				{
-					"command": "mywiki.replyNote",
-					"group": "inline",
-					"when": "commentController == comment-sample && !commentThreadIsEmpty"
-				},
-				{
-					"command": "mywiki.startDraft",
-					"group": "inline",
-					"when": "commentController == comment-sample && commentThreadIsEmpty"
-				},
-				{
-					"command": "mywiki.finishDraft",
-					"group": "inline",
-					"when": "commentController == comment-sample && commentThread == draft"
-				}
-			],
-			"comments/comment/title": [
-				{
-					"command": "mywiki.editNote",
-					"group": "group@1",
-					"when": "commentController == comment-sample"
-				},
-				{
-					"command": "mywiki.deleteNoteComment",
-					"group": "group@2",
-					"when": "commentController == comment-sample && comment == canDelete"
-				}
-			],
-			"comments/comment/context": [
-				{
-					"command": "mywiki.cancelsaveNote",
-					"group": "inline@1",
-					"when": "commentController == comment-sample"
-				},
-				{
-					"command": "mywiki.saveNote",
-					"group": "inline@2",
-					"when": "commentController == comment-sample"
-				}
-			]
-		}
-	},
-	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
-		"lint": "eslint \"src/**/*.ts\""
-	},
-	"devDependencies": {
-		"@types/node": "^18",
-		"@types/vscode": "^1.73.0",
-		"@typescript-eslint/eslint-plugin": "^7.14.0",
-		"@typescript-eslint/parser": "^7.14.0",
-		"eslint": "^8.26.0",
-		"typescript": "^5.5.2"
-	}
+  "name": "text-writing-assistant",
+  "displayName": "text-writing-assistant",
+  "description": "text writing assistant using chatgpt",
+  "version": "0.0.1",
+  "publisher": "vscode-samples",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.93.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "text-writing-assistant.showChatGPTSuggestion",
+        "title": "Show ChatGPT Suggestion"
+      },
+      {
+        "command": "text-writing-assistant.createNote",
+        "title": "Create Note",
+        "enablement": "!commentIsEmpty"
+      },
+      {
+        "command": "text-writing-assistant.replyNote",
+        "title": "Reply",
+        "enablement": "!commentIsEmpty"
+      },
+      {
+        "command": "text-writing-assistant.editNote",
+        "title": "Edit",
+        "icon": {
+          "dark": "resources/edit_inverse.svg",
+          "light": "resources/edit.svg"
+        }
+      },
+      {
+        "command": "text-writing-assistant.applySuggestion",
+        "title": "Apply Suggestion"
+      },
+      {
+        "command": "text-writing-assistant.deleteNote",
+        "title": "Delete Note",
+        "icon": {
+          "dark": "resources/close_inverse.svg",
+          "light": "resources/close.svg"
+        }
+      },
+      {
+        "command": "text-writing-assistant.deleteNoteComment",
+        "title": "Delete Comment",
+        "icon": {
+          "dark": "resources/close_inverse.svg",
+          "light": "resources/close.svg"
+        }
+      },
+      {
+        "command": "text-writing-assistant.saveNote",
+        "title": "Save"
+      },
+      {
+        "command": "text-writing-assistant.cancelsaveNote",
+        "title": "Cancel"
+      },
+      {
+        "command": "text-writing-assistant.startDraft",
+        "title": "Start Draft",
+        "enablement": "!commentIsEmpty"
+      },
+      {
+        "command": "text-writing-assistant.finishDraft",
+        "title": "Finish Draft"
+      },
+      {
+        "command": "text-writing-assistant.dispose",
+        "title": "Remove All Notes"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "text-writing-assistant.createNote",
+          "when": "false"
+        },
+        {
+          "command": "text-writing-assistant.replyNote",
+          "when": "false"
+        },
+        {
+          "command": "text-writing-assistant.deleteNote",
+          "when": "false"
+        },
+        {
+          "command": "text-writing-assistant.deleteNoteComment",
+          "when": "false"
+        }
+      ],
+      "comments/commentThread/title": [
+        {
+          "command": "text-writing-assistant.applySuggestion",
+          "group": "navigation",
+          "when": "commentController == chatgptSuggestion"
+        },
+        {
+          "command": "text-writing-assistant.deleteNote",
+          "group": "navigation",
+          "when": "commentController == chatgptSuggestion && !commentThreadIsEmpty"
+        }
+      ],
+      "comments/commentThread/context": [
+        {
+          "command": "text-writing-assistant.createNote",
+          "group": "inline",
+          "when": "commentController == chatgptSuggestion && commentThreadIsEmpty"
+        },
+        {
+          "command": "text-writing-assistant.replyNote",
+          "group": "inline",
+          "when": "commentController == chatgptSuggestion && !commentThreadIsEmpty"
+        },
+        {
+          "command": "text-writing-assistant.startDraft",
+          "group": "inline",
+          "when": "commentController == chatgptSuggestion && commentThreadIsEmpty"
+        },
+        {
+          "command": "text-writing-assistant.finishDraft",
+          "group": "inline",
+          "when": "commentController == chatgptSuggestion && commentThread == draft"
+        }
+      ],
+      "comments/comment/title": [
+        {
+          "command": "text-writing-assistant.editNote",
+          "group": "group@1",
+          "when": "commentController == chatgptSuggestion"
+        },
+        {
+          "command": "text-writing-assistant.deleteNoteComment",
+          "group": "group@2",
+          "when": "commentController == chatgptSuggestion && comment == canDelete"
+        }
+      ],
+      "comments/comment/context": [
+        {
+          "command": "text-writing-assistant.cancelsaveNote",
+          "group": "inline@1",
+          "when": "commentController == chatgptSuggestion"
+        },
+        {
+          "command": "text-writing-assistant.saveNote",
+          "group": "inline@2",
+          "when": "commentController == chatgptSuggestion"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint \"src/**/*.ts\""
+  },
+  "devDependencies": {
+    "@types/node": "^18",
+    "@types/vscode": "^1.93.0",
+    "@typescript-eslint/eslint-plugin": "^7.14.0",
+    "@typescript-eslint/parser": "^7.14.0",
+    "eslint": "^8.26.0",
+    "typescript": "^5.5.2"
+  },
+  "dependencies": {
+    "openai": "^4.65.0"
+  }
 }
