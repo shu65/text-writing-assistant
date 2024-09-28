@@ -24,6 +24,22 @@ export function activate(context: vscode.ExtensionContext) {
 			applySuggestion(thread);
 	}));
 
+	context.subscriptions.push(
+		vscode.commands.registerCommand('text-writing-assistant.showDiff', async (thread: vscode.CommentThread) => {
+			const editor = vscode.window.activeTextEditor;
+			if (!editor){
+				vscode.window.showInformationMessage('No active editor');
+				return;
+			}
+
+			const selection = thread.range;
+			const originalText = editor.document.getText(selection);
+			const suggestion = thread.comments[0].body.toString();
+
+			await showDiff(originalText, suggestion);
+
+	}));
+
 	context.subscriptions.push(vscode.commands.registerCommand('text-writing-assistant.deleteSuggestion', (thread: vscode.CommentThread) => {
 		deleteSuggestion(thread);
 	}));
@@ -61,4 +77,17 @@ export function activate(context: vscode.ExtensionContext) {
 			return cmt;
 		});
 	}));
+}
+
+async function showDiff(originalText: string, suggestion: string) {
+	const originalDoc = await vscode.workspace.openTextDocument({ content: originalText });
+	const suggestionDoc = await vscode.workspace.openTextDocument({ content: suggestion });
+
+	await vscode.commands.executeCommand(
+		'vscode.diff', 
+		originalDoc.uri, 
+		suggestionDoc.uri, 
+		'Original vs Suggestion',
+		{ preview: true, viewColumn: vscode.ViewColumn.Beside }
+	);
 }
