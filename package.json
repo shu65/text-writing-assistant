@@ -51,7 +51,7 @@
 				"title": "Save"
 			},
 			{
-				"command": "text-writing-assistant.cancelsaveSuggestion",
+				"command": "text-writing-assistant.cancelSaveSuggestion",
 				"title": "Cancel"
 			}
     ],
@@ -77,7 +77,7 @@
           "when": "false"
         },
         {
-          "command": "text-writing-assistant.cancelsaveSuggestion",
+          "command": "text-writing-assistant.cancelSaveSuggestion",
           "when": "false"
         }
       ],
@@ -109,7 +109,7 @@
       ],
       "comments/comment/context": [
         {
-					"command": "text-writing-assistant.cancelsaveSuggestion",
+					"command": "text-writing-assistant.cancelSaveSuggestion",
 					"group": "inline@1",
 					"when": "commentController == chatgptSuggestion"
 				},
