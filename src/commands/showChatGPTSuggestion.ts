@@ -31,7 +31,6 @@ export async function showChatGPTSuggestion(commentController: vscode.CommentCon
 		cancellable: false,
 	}, async () => {
 		try {
-			/*
       const response = await openai_client.chat.completions.create({
         model: 'gpt-3.5-turbo',
         messages: [
@@ -43,8 +42,7 @@ export async function showChatGPTSuggestion(commentController: vscode.CommentCon
       });
 
       const suggestion = response.choices[0].message.content?.trim();
-      */
-      const suggestion = "This is a suggestion from GPT";
+      // const suggestion = "This is a suggestion from GPT";
 			if (!suggestion) {
 				vscode.window.showInformationMessage('No suggestion from ChatGPT');
 				return;
