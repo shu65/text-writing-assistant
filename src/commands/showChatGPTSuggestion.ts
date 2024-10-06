@@ -30,12 +30,15 @@ export async function showChatGPTSuggestion(commentController: vscode.CommentCon
 		title: 'ChatGPT is thinking...',
 		cancellable: false,
 	}, async () => {
+		const modelName = vscode.workspace.getConfiguration('text-writing-assistant').get('modelName') as string;
+		const userPrompt = vscode.workspace.getConfiguration('text-writing-assistant').get('userPrompt') as string;
+		const instruction = vscode.workspace.getConfiguration('text-writing-assistant').get('instruction') as string;
 		try {
       const response = await openai_client.chat.completions.create({
-        model: 'gpt-3.5-turbo',
+        model: modelName,
         messages: [
           { role: 'system', content: 'The following is a conversation with an AI assistant' },
-          { role: 'user', content: `以下のテキストをより良い文章にしてください：\n\n"${originalText}"` },
+          { role: 'user', content: `${instruction}\n\n"${originalText}"` },
         ],
         max_tokens: 500,
         temperature: 0.7,

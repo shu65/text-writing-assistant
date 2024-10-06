@@ -119,6 +119,25 @@
 					"when": "commentController == chatgptSuggestion"
 				}
       ]
+    },
+    "configuration": {
+      "properties": {
+        "text-writing-assistant.openaiApiKey": {
+          "type": "string",
+          "default": "",
+          "description": "OpenAI API Key"
+        },
+        "text-writing-assistant.modelName": {
+          "type": "string",
+          "default": "gpt-3.5-turbo",
+          "description": "OpenAI model name"
+        },
+        "text-writing-assistant.instruction": {
+          "type": "string",
+          "default": "以下のテキストをより良い文章にしてください",
+          "description": "user instruction"
+        }
+      }
     }
   },
   "scripts": {
