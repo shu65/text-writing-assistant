@@ -1,0 +1,160 @@
+{
+  "name": "text-writing-assistant",
+  "displayName": "text-writing-assistant",
+  "description": "text writing assistant using chatgpt",
+  "version": "0.0.1",
+  "publisher": "vscode-samples",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.93.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "text-writing-assistant.showChatGPTSuggestion",
+        "title": "Show ChatGPT Suggestion"
+      },
+      {
+        "command": "text-writing-assistant.applySuggestion",
+        "title": "Apply Suggestion"
+      },
+      {
+        "command": "text-writing-assistant.showDiff",
+        "title": "Show diff"
+      },
+      {
+        "command": "text-writing-assistant.deleteSuggestion",
+        "title": "Delete Suggestion",
+        "icon": {
+          "dark": "resources/close_inverse.svg",
+          "light": "resources/close.svg"
+        }
+      },
+      {
+				"command": "text-writing-assistant.editSuggestion",
+				"title": "Edit Suggestion",
+				"icon": {
+					"dark": "resources/edit_inverse.svg",
+					"light": "resources/edit.svg"
+				}
+			},
+      {
+				"command": "text-writing-assistant.saveSuggestion",
+				"title": "Save"
+			},
+			{
+				"command": "text-writing-assistant.cancelSaveSuggestion",
+				"title": "Cancel"
+			}
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "text-writing-assistant.applySuggestion",
+          "when": "false"
+        },
+        {
+          "command": "text-writing-assistant.showDiff",
+          "when": "false"
+        },
+        {
+          "command": "text-writing-assistant.deleteSuggestion",
+          "when": "false"
+        },      {
+          "command": "text-writing-assistant.editSuggestion",
+          "when": "false"
+        },
+        {
+          "command": "text-writing-assistant.saveSuggestion",
+          "when": "false"
+        },
+        {
+          "command": "text-writing-assistant.cancelSaveSuggestion",
+          "when": "false"
+        }
+      ],
+      "comments/commentThread/title": [
+        {
+          "command": "text-writing-assistant.applySuggestion",
+          "group": "navigation@1",
+          "when": "commentController == chatgptSuggestion"
+        },
+        {
+          "command": "text-writing-assistant.showDiff",
+          "group": "navigation@2",
+          "when": "commentController == chatgptSuggestion"
+        },
+        {
+          "command": "text-writing-assistant.deleteSuggestion",
+          "group": "navigation@3",
+          "when": "commentController == chatgptSuggestion && !commentThreadIsEmpty"
+        }
+      ],
+      "comments/commentThread/context": [
+      ],
+      "comments/comment/title": [
+        {
+					"command": "text-writing-assistant.editSuggestion",
+					"group": "group@1",
+					"when": "commentController == chatgptSuggestion"
+				}
+      ],
+      "comments/comment/context": [
+        {
+					"command": "text-writing-assistant.cancelSaveSuggestion",
+					"group": "inline@1",
+					"when": "commentController == chatgptSuggestion"
+				},
+				{
+					"command": "text-writing-assistant.saveSuggestion",
+					"group": "inline@2",
+					"when": "commentController == chatgptSuggestion"
+				}
+      ]
+    },
+    "configuration": {
+      "properties": {
+        "text-writing-assistant.openaiApiKey": {
+          "type": "string",
+          "default": "",
+          "description": "OpenAI API Key"
+        },
+        "text-writing-assistant.modelName": {
+          "type": "string",
+          "default": "gpt-3.5-turbo",
+          "description": "OpenAI model name"
+        },
+        "text-writing-assistant.instruction": {
+          "type": "string",
+          "default": "以下のテキストをより良い文章にしてください",
+          "description": "user instruction"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint \"src/**/*.ts\""
+  },
+  "devDependencies": {
+    "@types/node": "^18",
+    "@types/vscode": "^1.93.0",
+    "@typescript-eslint/eslint-plugin": "^7.14.0",
+    "@typescript-eslint/parser": "^7.14.0",
+    "eslint": "^8.26.0",
+    "typescript": "^5.5.2"
+  },
+  "dependencies": {
+    "openai": "^4.65.0"
+  }
+}
