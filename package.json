@@ -122,6 +122,11 @@
     },
     "configuration": {
       "properties": {
+        "text-writing-assistant.openaiBaseURL": {
+          "type": "string",
+          "default": "https://api.openai.com/v1",
+          "description": "OpenAI API Base URL"
+        },
         "text-writing-assistant.openaiApiKey": {
           "type": "string",
           "default": "",
